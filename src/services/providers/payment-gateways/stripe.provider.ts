@@ -1,4 +1,4 @@
-import { PaymentProviderInterface } from '../../../interfaces/payment-provider.interface';
+import { PaymentProviderInterface } from '../../../interfaces/providers/payment-provider.interface';
 
 export default class StripeProvider implements PaymentProviderInterface {
     name = "stripe";

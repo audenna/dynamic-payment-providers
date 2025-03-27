@@ -1,18 +1,15 @@
 import { Request, Response } from "express";
-import { PaymentProviderManager } from "../services/payment";
-import { PaymentProviderInterface } from "../interfaces/payment-provider.interface";
+import { PaymentProviderManager } from "../services/managers/payment-provider-manager";
+import { PaymentProviderInterface } from "../interfaces/providers/payment-provider.interface";
+
+const paymentManager = PaymentProviderManager.getInstance();
 
 export class PaymentController {
-    private paymentProviderManager: PaymentProviderManager;
-
-    constructor() {
-        this.paymentProviderManager = PaymentProviderManager.getInstance();
-    }
 
     makePayment = async (req: Request, res: Response): Promise<void> => {
         try {
             const { provider, data } = req.body;
-            const paymentProvider: PaymentProviderInterface = this.paymentProviderManager.getProvider(provider);
+            const paymentProvider: PaymentProviderInterface = paymentManager.getProvider(provider);
 
             const result = await paymentProvider.processPayment(1, data);
             res.json({ success: true, data: result });
@@ -22,6 +19,6 @@ export class PaymentController {
     }
 
     listProviders = (_req: Request, res: Response): void => {
-        res.status(200).json({ providers: this.paymentProviderManager.listProviders() });
+        res.status(200).json({ providers: paymentManager.listProviders() });
     };
 }
