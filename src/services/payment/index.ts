@@ -31,6 +31,13 @@ export class PaymentProviderManager {
 
             const providerPath: string = path.join(dir, file);
             const { default: ProviderClass } = require(providerPath);
+
+            /**
+             * { ProviderClass: [class PaypalProvider] }
+             * { ProviderClass: [class StripeProvider] }
+             */
+            console.log({ ProviderClass });
+
             const providerInstance: PaymentProviderInterface = new ProviderClass();
 
             const providerKey: string = file.split(".")[0].replace(".provider", "");
