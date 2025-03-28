@@ -5,7 +5,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 
 // Import routes
-import paymentRoutes from './src/routes/payment.routes';
+import routes from './src/routes';
 
 dotenv.config();
 
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(morgan("common"));
 
 // Routes
-app.use('/api/payment', paymentRoutes);
+app.use(routes);
 
 // Health Check Route
 app.get('/', (_req, res) => {
