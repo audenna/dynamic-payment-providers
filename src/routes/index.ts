@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
 // import all other routers
-import routesV1 from "./v1";
+import v1Routes from "./v1";
 
 const router = Router();
 
-router.use('/v1', routesV1);
+router.use('/v1', v1Routes);
 
 export default router;
