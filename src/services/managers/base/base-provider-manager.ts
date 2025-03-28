@@ -11,7 +11,7 @@ export abstract class BaseProviderManager<T> implements ProviderManagerInterface
 
     protected loadProviders(): void {
         const files: string[] = fs.readdirSync(this.providerDir);
-        console.log({ files }); // Examples { files: [ 'paypal.provider.ts', 'stripe.provider.ts' ] }
+        // console.log({ files }); // Examples { files: [ 'paypal.provider.ts', 'stripe.provider.ts' ] }
 
         files.forEach((file: string): void => {
             if (file.endsWith(".provider.ts")) {
