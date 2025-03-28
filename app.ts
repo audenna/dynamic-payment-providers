@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(morgan("common"));
 
 // Routes
-app.use(routes);
+app.use('/api', routes);
 
 // Health Check Route
 app.get('/', (_req, res) => {

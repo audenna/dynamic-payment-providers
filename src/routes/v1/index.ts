@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
 // import all other routers
-import routesV1 from "./v1";
+import paymentRoutes from "./payments/payment.routes";
 
 const router = Router();
 
-router.use('/v1', routesV1);
+router.use('/payments', paymentRoutes);
 
 export default router;
