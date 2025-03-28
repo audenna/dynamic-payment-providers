@@ -11,32 +11,32 @@ export abstract class BaseProviderManager<T> implements ProviderManagerInterface
 
     protected loadProviders(): void {
         const files: string[] = fs.readdirSync(this.providerDir);
-        // console.log({ files }); // Examples { files: [ 'paypal.provider.ts', 'stripe.provider.ts' ] }
+        console.log({ files }); // Examples { files: [ 'paypal.provider.ts', 'stripe.provider.ts' ] }
 
         files.forEach((file: string): void => {
-            if (!file.endsWith(".provider.ts") && !file.endsWith(".provider.js")) return;
+            if (file.endsWith(".provider.ts")) {
+                const providerPath: string = path.join(this.providerDir, file);
+                const { default: ProviderClass } = require(providerPath);
 
-            const providerPath: string = path.join(this.providerDir, file);
-            const { default: ProviderClass } = require(providerPath);
+                /**
+                 * { ProviderClass: [class PaypalProvider] }
+                 * { ProviderClass: [class StripeProvider] }
+                 */
+                // console.log({ ProviderClass });
 
-            /**
-             * { ProviderClass: [class PaypalProvider] }
-             * { ProviderClass: [class StripeProvider] }
-             */
-            console.log({ ProviderClass });
+                const providerInstance: T = new ProviderClass();
+                // @ts-ignore - assuming all providers have `name`
+                this.providers.set(providerInstance.name, providerInstance)
 
-            const providerInstance: T = new ProviderClass();
-            // @ts-ignore - assuming all providers have `name`
-            this.providers.set(providerInstance.name, providerInstance)
-
-            /**
-             * Example storage
-             * {
-             *   paypal: PaypalProvider { name: 'paypal' },
-             *   stripe: StripeProvider { name: 'stripe' }
-             * }
-             */
-            console.log(this.providers);
+                /**
+                 * Example storage
+                 * {
+                 *   paypal: PaypalProvider { name: 'paypal' },
+                 *   stripe: StripeProvider { name: 'stripe' }
+                 * }
+                 */
+                // console.log(this.providers);
+            }
         });
     }
 
